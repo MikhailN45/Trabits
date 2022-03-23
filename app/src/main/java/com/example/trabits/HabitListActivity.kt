@@ -4,18 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.habit_list_activity.*
-
+import com.example.trabits.databinding.HabitListActivityBinding
 
 class HabitListActivity : AppCompatActivity() {
-
-    private val ADD_KEY = 1
-    private val EDIT_KEY = 2
+    private lateinit var binding: HabitListActivityBinding
     private lateinit var adapter: HabitAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.habit_list_activity)
+        binding = HabitListActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val data = ArrayList<Habit>()
 
@@ -24,23 +22,23 @@ class HabitListActivity : AppCompatActivity() {
                 putExtra("position", position)
                 putExtra("object", habit)
             }
-            startActivityForResult(intent, EDIT_KEY)
+            startActivityForResult(intent, Constants.EDIT_KEY)
         }
 
-        habits_recycler.adapter = adapter
+        binding.habitsRecycler.adapter = adapter
 
-        edit_habit_button.setOnClickListener {
-            val intent = Intent(this, HabitCustomizeActivity::class.java).run {
-                startActivityForResult(this, ADD_KEY)
+        binding.editHabitButton.setOnClickListener {
+            Intent(this, HabitCustomizeActivity::class.java).run {
+                startActivityForResult(this, Constants.ADD_KEY)
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADD_KEY && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constants.ADD_KEY && resultCode == Activity.RESULT_OK) {
             adapter.addItem(data?.getSerializableExtra("new") as Habit)
             adapter.notifyItemInserted(adapter.itemCount - 1)
-        } else if (requestCode == EDIT_KEY) {
+        } else if (requestCode == Constants.EDIT_KEY) {
             println((data?.getSerializableExtra("new") as Habit).toString())
             adapter.changeItem(
                 data.getSerializableExtra("new") as Habit,
@@ -48,6 +46,13 @@ class HabitListActivity : AppCompatActivity() {
             )
         } else {
             super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    class Constants {
+        companion object {
+            const val ADD_KEY = 1
+            const val EDIT_KEY = 2
         }
     }
 }

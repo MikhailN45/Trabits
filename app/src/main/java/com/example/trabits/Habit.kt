@@ -8,5 +8,5 @@ data class Habit(
     var priority: String,
     var type: Boolean,
     var period: String,
-    var times: Int?
+    var times: String?
 ) : Serializable

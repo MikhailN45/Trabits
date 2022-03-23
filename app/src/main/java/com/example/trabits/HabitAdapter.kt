@@ -54,9 +54,6 @@ class HabitAdapter(
                 }
                 habit_counter_field.text = "${habit.times.toString()} times complete"
             }
-
-
         }
     }
-
 }

@@ -2,12 +2,6 @@
     <string name="app_name">Trabits</string>
     <string name="priority">priority</string>
     <string name="times">times</string>
-    <string name="low">Low</string>
-    <string name="medium">Medium</string>
-    <string name="high">High</string>
-    <string name="day">Everyday</string>
-    <string name="week">Every week</string>
-    <string name="month">Every month</string>
     <string name="enter_habit_name">Enter Habit Name</string>
     <string name="enter_habit_description">Enter habit description</string>
     <string name="choose_priority">Choose Priority</string>
@@ -16,4 +10,15 @@
     <string name="periodicity">Periodicity</string>
     <string name="count">Count</string>
     <string name="save">save</string>
+    <string name="add_new_habit">Add new habit</string>
+    <string-array name="habits_priority_types">
+        <item name="low">Low</item>
+        <item name="medium">Medium</item>
+        <item name="high">High</item>
+    </string-array>
+    <string-array name="habits_period_types">
+        <item name="day">Everyday</item>
+        <item name="week">Every week</item>
+        <item name="month">Every month</item>
+    </string-array>
 </resources>
