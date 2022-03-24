@@ -6,30 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".HabitListActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/habits_list_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/habits_list"
+        app:titleTextColor="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/habits_recycler"
+        android:id="@+id/habits_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_16"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        app:layout_constraintTop_toBottomOf="@id/habits_list_toolbar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/edit_habit_button"
+        android:id="@+id/to_edit_habit_button"
         style="Widget.Design.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_baseline_add_24"
-        android:tint="@android:color/white"
+        android:layout_margin="@dimen/dimen_16"
+        android:contentDescription="@string/add_new_habit"
+        android:src="@drawable/ic_baseline_add_32"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="@dimen/dimen_8"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/add_new_habit"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

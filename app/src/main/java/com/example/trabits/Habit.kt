@@ -1,12 +1,15 @@
 package com.example.trabits
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Habit(
-    var name: String,
+    var title: String,
     var description: String,
-    var priority: String,
-    var type: Boolean,
-    var period: String,
-    var times: String?
-) : Serializable
+    var priority: Int,
+    var type: Int,
+    var count: Int,
+    var frequency: Int,
+    var color: Int
+) : Parcelable

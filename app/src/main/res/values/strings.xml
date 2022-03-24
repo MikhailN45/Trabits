@@ -3,22 +3,84 @@
     <string name="priority">priority</string>
     <string name="times">times</string>
     <string name="enter_habit_name">Enter Habit Name</string>
-    <string name="enter_habit_description">Enter habit description</string>
+    <string name="enter_habit_description">Enter Habit Description</string>
     <string name="choose_priority">Choose Priority</string>
-    <string name="good">Good</string>
-    <string name="bad">Bad</string>
+    <string name="good">Good </string>
+    <string name="bad">Bad </string>
     <string name="periodicity">Periodicity</string>
     <string name="count">Count</string>
     <string name="save">save</string>
+    <string name="habit">habit</string>
+    <string name="times_complete">times complete</string>
+    <string name="RGB">RGB - %1$s</string>
+    <string name="HSV">HSV - %1$s</string>
+    <string name="discard_changes">Discard changes</string>
+    <string name="unsaved_changes">Changes will not be saved!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="add_new_habit">Add new habit</string>
-    <string-array name="habits_priority_types">
-        <item name="low">Low</item>
-        <item name="medium">Medium</item>
-        <item name="high">High</item>
+    <string name="habit_editor">Habit editor</string>
+    <string name="choose_habit_color">Choose habit color</string>
+    <string name="ok">OK</string>
+    <string name="set_default">Set default</string>
+    <string name="choose_color">Choose habit color</string>
+    <string name="label_add">Add habit</string>
+    <string name="label_edit">Edit Habit</string>
+    <string name="field_must_not_be_empty">Field must not be empty!</string>
+    <string name="habits_list">Habits List</string>
+    <string name="habit_color">Habit color</string>
+    <string-array name="priorities">
+        <item>No priority</item>
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
     </string-array>
-    <string-array name="habits_period_types">
-        <item name="day">Everyday</item>
-        <item name="week">Every week</item>
-        <item name="month">Every month</item>
+
+    <string-array name="periods">
+        <item>every hour</item>
+        <item>every day</item>
+        <item>every week</item>
+        <item>every month</item>
+        <item>every year</item>
+    </string-array>
+
+    <string-array name="hsv">
+        <item>(14, 27, 100)</item>
+        <item>(39, 27, 100)</item>
+        <item>(59, 27, 100)</item>
+        <item>(80, 27, 100)</item>
+        <item>(101, 27, 100)</item>
+        <item>(121, 27, 100)</item>
+        <item>(147, 27, 100)</item>
+        <item>(169, 27, 100)</item>
+        <item>(190, 27, 100)</item>
+        <item>(213, 27, 100)</item>
+        <item>(236, 27, 100)</item>
+        <item>(259, 27, 100)</item>
+        <item>(281, 27, 100)</item>
+        <item>(300, 27, 100)</item>
+        <item>(323, 27, 100)</item>
+        <item>(347, 27, 100)</item>
+        <item>(231, 27, 85)</item>
+    </string-array>
+
+    <string-array name="rgb">
+        <item>(255, 203, 187)</item>
+        <item>(255, 232, 187)</item>
+        <item>(255, 255, 187)</item>
+        <item>(233, 255, 187)</item>
+        <item>(209, 255, 187)</item>
+        <item>(186, 255, 187)</item>
+        <item>(187, 255, 218)</item>
+        <item>(187, 255, 243)</item>
+        <item>(186, 243, 254)</item>
+        <item>(187, 218, 255)</item>
+        <item>(187, 191, 255)</item>
+        <item>(209, 187, 255)</item>
+        <item>(234, 187, 255)</item>
+        <item>(255, 185, 255)</item>
+        <item>(255, 187, 230)</item>
+        <item>(255, 187, 202)</item>
+        <item>(159, 168, 218)</item>
     </string-array>
 </resources>

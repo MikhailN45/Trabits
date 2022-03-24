@@ -8,51 +8,74 @@ import com.example.trabits.databinding.HabitListActivityBinding
 
 class HabitListActivity : AppCompatActivity() {
     private lateinit var binding: HabitListActivityBinding
-    private lateinit var adapter: HabitAdapter
+
+    private val adapter: HabitAdapter by lazy {
+        val data = ArrayList<Habit>()
+        HabitAdapter(data, this) { habit, position ->
+
+            val intent = Intent(this, HabitCustomizeActivity::class.java).run {
+                putExtra(INTENT_POSITION_KEY, position)
+                putExtra(INTENT_OBJECT_KEY, habit)
+            }
+            startActivityForResult(intent, INTENT_EDIT_KEY)
+        }
+    }
+
+    private var habits = arrayListOf<Habit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = HabitListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = ArrayList<Habit>()
+        setSupportActionBar(binding.habitsListToolbar)
 
-        adapter = HabitAdapter(data) { habit, position ->
-            val intent = Intent(this, HabitCustomizeActivity::class.java).run {
-                putExtra("position", position)
-                putExtra("object", habit)
-            }
-            startActivityForResult(intent, Constants.EDIT_KEY)
-        }
+        binding.habitsListRecycler.addItemDecoration(
+            SpacingItemDecoration(DISTANCE_BETWEEN_ELEMENTS)
+        )
 
-        binding.habitsRecycler.adapter = adapter
+        binding.habitsListRecycler.adapter = adapter
 
-        binding.editHabitButton.setOnClickListener {
+        binding.toEditHabitButton.setOnClickListener {
             Intent(this, HabitCustomizeActivity::class.java).run {
-                startActivityForResult(this, Constants.ADD_KEY)
+                startActivityForResult(this, INTENT_ADD_KEY)
             }
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable(CONFIG_CHANGE_HABITS_CODE, adapter.habits)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        habits = savedInstanceState.getSerializable(CONFIG_CHANGE_HABITS_CODE) as ArrayList<Habit>
+        if (habits.size != 0) {
+            adapter.addListOfHabits(habits)
+        }
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == Constants.ADD_KEY && resultCode == Activity.RESULT_OK) {
-            adapter.addItem(data?.getSerializableExtra("new") as Habit)
-            adapter.notifyItemInserted(adapter.itemCount - 1)
-        } else if (requestCode == Constants.EDIT_KEY) {
-            println((data?.getSerializableExtra("new") as Habit).toString())
+        if (requestCode == INTENT_ADD_KEY && resultCode == Activity.RESULT_OK) {
+            adapter.addItem(data?.getParcelableExtra("new")!!)
+        } else if (requestCode == INTENT_EDIT_KEY) {
             adapter.changeItem(
-                data.getSerializableExtra("new") as Habit,
-                data.getIntExtra("position", 0)
+                data?.getParcelableExtra(HabitCustomizeActivity.NEW_HABIT)!!,
+                data.getIntExtra(HabitCustomizeActivity.POSITION, 0)
             )
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-    class Constants {
-        companion object {
-            const val ADD_KEY = 1
-            const val EDIT_KEY = 2
-        }
+    companion object {
+        const val INTENT_ADD_KEY = 1
+        const val INTENT_EDIT_KEY = 2
+        const val INTENT_POSITION_KEY = "position"
+        const val INTENT_OBJECT_KEY = "object"
+        const val CONFIG_CHANGE_HABITS_CODE = "list of habits"
+        const val DISTANCE_BETWEEN_ELEMENTS = 50
     }
 }

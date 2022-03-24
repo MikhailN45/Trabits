@@ -1,5 +1,6 @@
 package com.example.trabits
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,13 @@ import kotlinx.android.synthetic.main.recycler_item.view.*
 
 
 class HabitAdapter(
-    private var habits: ArrayList<Habit>,
+    var habits: ArrayList<Habit>,
+    context: Context,
     val adapterOnClickConstraint: (Habit, Int) -> Unit
 ) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
+
+    private val priorities = context.resources.getStringArray(R.array.priorities)
+    private val frequent = context.resources.getStringArray(R.array.periods)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,6 +31,12 @@ class HabitAdapter(
 
     fun addItem(habit: Habit) {
         habits.add(habit)
+        notifyItemInserted(itemCount - 1)
+    }
+
+    fun addListOfHabits(newHabits: ArrayList<Habit>) {
+        habits = newHabits
+        notifyDataSetChanged()
     }
 
     fun changeItem(habit: Habit, position: Int) {
@@ -38,22 +49,36 @@ class HabitAdapter(
         fun bind(habit: Habit, position: Int) {
             containerView.run {
 
-                constraintMainRecyclerElement.setOnClickListener {
+                recycler_item_element.setOnClickListener {
                     adapterOnClickConstraint(habit, position)
                 }
 
-                habitNameRecyclerElement.text = habit.name
-                habit_description_field.text = habit.description
-                habit_periodicity_field.text = "Repeat ${habit.period}"
-                habit_priority_field.text = "${habit.priority} priority"
+                habit_recycler_name.text = habit.title
 
-                habit_type_field.text = if (habit.type) {
-                    "Good habit"
-                } else {
-                    "Bad habit"
+                habit_recycler_description.text = habit.description
+
+                habit_recycler_priority.text = when (habit.priority) {
+                    1 -> "${priorities[1]} ${this.resources.getString(R.string.priority)}"
+                    2 -> "${priorities[2]} ${this.resources.getString(R.string.priority)}"
+                    else -> priorities[0]
                 }
-                habit_counter_field.text = "${habit.times.toString()} times complete"
+
+                habit_recycler_type.text = if (habit.type == 1) {
+                    "${this.resources.getString(R.string.good)} ${this.resources.getString(R.string.habit)}"
+                } else {
+                    "${this.resources.getString(R.string.bad)} ${this.resources.getString(R.string.habit)}"
+                }
+
+                habit_recycler_periodicity.text = when (habit.frequency) {
+                    0 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[0]}"
+                    1 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[1]}"
+                    2 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[2]}"
+                    3 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[3]}"
+                    else -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[4]}"
+                }
+                recycler_item_element.setBackgroundColor(habit.color)
             }
         }
     }
 }
+//TODO add binding
