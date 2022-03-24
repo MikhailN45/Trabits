@@ -30,10 +30,6 @@ class HabitListActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.habitsListToolbar)
 
-        binding.habitsListRecycler.addItemDecoration(
-            SpacingItemDecoration(DISTANCE_BETWEEN_ELEMENTS)
-        )
-
         binding.habitsListRecycler.adapter = adapter
 
         binding.toEditHabitButton.setOnClickListener {
@@ -76,6 +72,5 @@ class HabitListActivity : AppCompatActivity() {
         const val INTENT_POSITION_KEY = "position"
         const val INTENT_OBJECT_KEY = "object"
         const val CONFIG_CHANGE_HABITS_CODE = "list of habits"
-        const val DISTANCE_BETWEEN_ELEMENTS = 50
     }
 }
