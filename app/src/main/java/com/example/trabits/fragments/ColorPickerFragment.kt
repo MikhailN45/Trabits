@@ -1,4 +1,4 @@
-package com.example.trabits
+package com.example.trabits.fragments
 
 
 import android.content.res.ColorStateList
@@ -7,25 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.example.trabits.R
+import com.example.trabits.Util
 import kotlinx.android.synthetic.main.color_picker_fragment.*
 import kotlinx.android.synthetic.main.color_picker_fragment.view.*
 
-class ColorPickerDialogFragment : DialogFragment() {
+class ColorPickerDialogFragment(private val event: (Int, Int) -> Unit) : DialogFragment() {
 
     private val listOfRgb: Array<String> by lazy {
         requireContext().resources.getStringArray(R.array.rgb)
     }
+
     private val listOfHsv: Array<String> by lazy {
         requireContext().resources.getStringArray(R.array.hsv)
-    }
-    private val iChangeColor: IChangeColor by lazy {
-        activity as IChangeColor
     }
 
     var color: Int = 0
     private var colors = Util.intColors
-    private var curColorForCard = colors[DEFAULT_COLOR]!!
-    private var curColorNumber = DEFAULT_COLOR
+    private var currentColorForCard = colors[DEFAULT_COLOR]!!
+    private var currentColorNumber = DEFAULT_COLOR
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,15 +38,16 @@ class ColorPickerDialogFragment : DialogFragment() {
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             it.window?.setLayout(width, height)
         }
+
         super.onStart()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val curColorNumber = requireArguments().getInt(COLOR_NUMBER_BUNDLE_ARG)
+        val chosenColorNumber = requireArguments().getInt(COLOR_NUMBER_BUNDLE_ARG)
 
-        if (curColorNumber != DEFAULT_COLOR) {
-            choseColor(curColorNumber)
+        if (chosenColorNumber != DEFAULT_COLOR) {
+            choseColor(chosenColorNumber)
         } else {
             choseColor(DEFAULT_COLOR)
         }
@@ -69,27 +70,19 @@ class ColorPickerDialogFragment : DialogFragment() {
             }
 
             applyColorButton.setOnClickListener {
-                iChangeColor.onChangeColor(
-                    curColorForCard,
-                    this@ColorPickerDialogFragment.curColorNumber
-                )
+                event(currentColorForCard, this@ColorPickerDialogFragment.currentColorNumber)
                 dismiss()
             }
         }
         super.onViewCreated(view, savedInstanceState)
     }
 
-    interface IChangeColor {
-        fun onChangeColor(newColor: Int, newColorNumber: Int)
-    }
-
-
     private fun choseColor(colorNumber: Int) {
 
-        curColorForCard = colors[colorNumber]!!
-        curColorNumber = colorNumber
+        currentColorForCard = colors[colorNumber]!!
+        currentColorNumber = colorNumber
 
-        chosenColorCard.setCardForegroundColor(ColorStateList.valueOf(curColorForCard))
+        chosenColorCard.setCardForegroundColor(ColorStateList.valueOf(currentColorForCard))
 
         rgbColorTextView.text =
             requireContext().getString(R.string.RGB, listOfRgb[colorNumber])
@@ -102,7 +95,7 @@ class ColorPickerDialogFragment : DialogFragment() {
             checkedColor4, checkedColor5, checkedColor6, checkedColor7,
             checkedColor8, checkedColor9, checkedColor10, checkedColor11,
             checkedColor12, checkedColor13, checkedColor14, checkedColor15,
-            checkedColor16,
+            checkedColor16
         )
 
         checkedColors.forEach { it.visibility = INVISIBLE }
@@ -119,12 +112,13 @@ class ColorPickerDialogFragment : DialogFragment() {
         const val INVISIBLE = View.INVISIBLE
 
 
-        fun newInstance(curColorNumber: Int): ColorPickerDialogFragment {
+        fun newInstance(curColorNumber: Int, event: (Int, Int) -> Unit): ColorPickerDialogFragment {
             val args = Bundle().apply {
                 putInt(COLOR_NUMBER_BUNDLE_ARG, curColorNumber)
             }
-            val fragment = ColorPickerDialogFragment()
+            val fragment = ColorPickerDialogFragment(event)
             fragment.arguments = args
+
             return fragment
         }
     }

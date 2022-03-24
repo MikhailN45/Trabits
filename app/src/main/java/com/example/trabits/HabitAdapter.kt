@@ -4,15 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.trabits.fragments.HabitListFragmentDirections
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.recycler_item.view.*
 
 
 class HabitAdapter(
-    var habits: ArrayList<Habit>,
-    context: Context,
-    val adapterOnClickConstraint: (Habit, Int) -> Unit
+    private var habits: MutableList<Habit>,
+    context: Context
 ) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
 
     private val priorities = context.resources.getStringArray(R.array.priorities)
@@ -26,31 +27,30 @@ class HabitAdapter(
     override fun getItemCount(): Int = habits.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(habits[position], position)
+        holder.bind(habits[position])
     }
 
-    fun addItem(habit: Habit) {
-        habits.add(habit)
-        notifyItemInserted(itemCount - 1)
-    }
-
-    fun addListOfHabits(newHabits: ArrayList<Habit>) {
+    fun addListOfHabits(newHabits: MutableList<Habit>) {
         habits = newHabits
         notifyDataSetChanged()
     }
 
-    fun changeItem(habit: Habit, position: Int) {
-        habits[position] = habit
-        notifyItemChanged(position)
-    }
 
     inner class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(habit: Habit, position: Int) {
+
+        fun bind(habit: Habit) {
+
             containerView.run {
 
                 recycler_item_element.setOnClickListener {
-                    adapterOnClickConstraint(habit, position)
+                    val action =
+                        HabitListFragmentDirections.actionHabitListFragmentToHabitCustomizeFragment(
+                            context.resources.getString(R.string.label_edit)
+                        )
+                    action.habitToEdit = habit
+
+                    Navigation.findNavController(it).navigate(action)
                 }
 
                 habit_recycler_name.text = habit.title
@@ -61,12 +61,6 @@ class HabitAdapter(
                     1 -> "${priorities[1]} ${this.resources.getString(R.string.priority)}"
                     2 -> "${priorities[2]} ${this.resources.getString(R.string.priority)}"
                     else -> priorities[0]
-                }
-
-                habit_recycler_type.text = if (habit.type == 1) {
-                    "${this.resources.getString(R.string.good)} ${this.resources.getString(R.string.habit)}"
-                } else {
-                    "${this.resources.getString(R.string.bad)} ${this.resources.getString(R.string.habit)}"
                 }
 
                 habit_recycler_periodicity.text = when (habit.frequency) {
@@ -81,4 +75,3 @@ class HabitAdapter(
         }
     }
 }
-//TODO add binding

@@ -29,6 +29,12 @@
     <string name="field_must_not_be_empty">Field must not be empty!</string>
     <string name="habits_list">Habits List</string>
     <string name="habit_color">Habit color</string>
+    <string name="about">About application</string>
+    <string name="trabits">Trabits</string>
+    <string name="credits">Credits</string>
+    <string name="about_fragment">About Fragment</string>
+    <string name="https_github_com_mikhailn45">https://github.com/MikhailN45</string>
+    <string name="developed_for_doubletapp">Developed for DoubleTapp</string>
     <string-array name="priorities">
         <item>No priority</item>
         <item>Low</item>

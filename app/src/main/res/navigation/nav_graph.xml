@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_host_fragment">
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="com.example.trabits.fragments.HabitListFragment"
+        android:label="Habits List"
+        tools:layout="@layout/habit_list_fragment">
+
+        <action
+            android:id="@+id/action_habitListFragment_to_habitCustomizeFragment"
+            app:destination="@id/habit_customize_fragment" />
+
+        <argument
+            android:name="CustomizeHabit"
+            android:defaultValue="@null"
+            app:argType="com.example.trabits.Habit"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_habitListFragment_to_aboutFragment"
+            app:destination="@id/credits_drawer_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/habit_customize_fragment"
+        android:name="com.example.trabits.fragments.HabitCustomizeFragment"
+        android:label="{dynamicTitle}"
+        tools:layout="@layout/habit_customize_fragment">
+
+        <argument
+            android:name="habitToEdit"
+            android:defaultValue="@null"
+            app:argType="com.example.trabits.Habit"
+            app:nullable="true" />
+
+        <argument
+            android:name="dynamicTitle"
+            app:argType="string" />
+
+
+        <action
+            android:id="@+id/action_habitCustomizeFragment_to_habitListFragment"
+            app:destination="@id/nav_host_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/credits_drawer_fragment"
+        android:name="com.example.trabits.fragments.AboutFragment"
+        android:label="@string/about"
+        tools:layout="@layout/about_fragment" />
+
+</navigation>
