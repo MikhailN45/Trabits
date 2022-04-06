@@ -19,7 +19,7 @@ class HabitAdapter(
 ) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
 
     private val priorities = context.resources.getStringArray(R.array.priorities)
-    private val frequent = context.resources.getStringArray(R.array.periods)
+    private val periods = context.resources.getStringArray(R.array.periods)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -59,19 +59,19 @@ class HabitAdapter(
                 habit_recycler_name.text = habit.title
 
                 habit_recycler_description.text = habit.description
-//TODO(вынести логику в утилс и внедрить строки с параметрами)
+
                 habit_recycler_priority.text = when (habit.priority) {
                     1 -> "${priorities[1]} ${this.resources.getString(R.string.priority)}"
                     2 -> "${priorities[2]} ${this.resources.getString(R.string.priority)}"
                     else -> priorities[0]
                 }
 
-                habit_recycler_periodicity.text = when (habit.frequency) {
-                    0 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[0]}"
-                    1 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[1]}"
-                    2 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[2]}"
-                    3 -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[3]}"
-                    else -> "${habit.count} ${resources.getString(R.string.times)} ${frequent[4]}"
+                habit_recycler_periodicity.text = when (habit.period) {
+                    0 -> "${habit.count} ${resources.getString(R.string.times)} ${periods[0]}"
+                    1 -> "${habit.count} ${resources.getString(R.string.times)} ${periods[1]}"
+                    2 -> "${habit.count} ${resources.getString(R.string.times)} ${periods[2]}"
+                    3 -> "${habit.count} ${resources.getString(R.string.times)} ${periods[3]}"
+                    else -> "${habit.count} ${resources.getString(R.string.times)} ${periods[4]}"
                 }
                 recycler_item_element.setBackgroundColor(habit.color)
             }

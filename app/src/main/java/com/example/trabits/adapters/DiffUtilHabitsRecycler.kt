@@ -24,7 +24,7 @@ class DiffUtilHabitsRecycler(
             first.priority != sec.priority -> false
             first.type != sec.type -> false
             first.count != sec.count -> false
-            first.frequency != sec.frequency -> false
+            first.period != sec.period -> false
             first.color != sec.color -> false
             first.date != sec.date -> false
             first.doneDates != sec.doneDates -> false

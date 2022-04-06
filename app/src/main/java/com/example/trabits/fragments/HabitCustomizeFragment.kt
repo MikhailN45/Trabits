@@ -46,7 +46,7 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
 
     private val habitsCustomizeViewModel: HabitCustomizeViewModel by activityViewModels()
 
-    override fun onCreateView(
+override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,7 +104,6 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
         else -> super.onOptionsItemSelected(item)
     }
 
-    //TODO(вынести логику, разбить длинный метод)
     private fun saveHabit() {
         if (validateInput()) {
             val newPriority = if (binding.habitPriorityEdit.text.toString().isNotEmpty())
@@ -132,7 +131,7 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
                 priority = newPriority,
                 type = binding.radioGood.isChecked.toInt(),
                 count = newCount,
-                frequency = newFrequency,
+                period = newFrequency,
                 color = chosenColor,
                 date = newDate,
                 doneDates = mutableListOf()
@@ -196,7 +195,7 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
 
             binding.habitCounterEdit.setText(it.count.toString())
             binding.habitPriorityEdit.setText(priorities[it.priority])
-            binding.habitPeriodicityEdit.setText(periods[it.frequency])
+            binding.habitPeriodicityEdit.setText(periods[it.period])
 
             chosenColor = it.color
             chosenColorNumber = Util.getColorNumberByColor(it.color)

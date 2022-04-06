@@ -60,7 +60,7 @@ class ColorPickerDialogFragment : DialogFragment() {
         binding.setDefaultColorButton.setOnClickListener {
             choseColor(DEFAULT_COLOR)
         }
-        //TODO(ForLoop)
+
         view.apply {
             val colorCards = mutableListOf<View>(
                 binding.colorCard1,

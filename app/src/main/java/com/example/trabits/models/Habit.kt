@@ -10,7 +10,7 @@ data class Habit(
     var priority: Int,
     var type: Int,
     var count: Int,
-    var frequency: Int,
+    var period: Int,
     var color: Int,
     var date: Long,
     var doneDates: MutableList<Long>

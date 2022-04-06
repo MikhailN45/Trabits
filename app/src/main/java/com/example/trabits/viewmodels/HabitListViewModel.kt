@@ -44,11 +44,11 @@ class HabitListViewModel : ViewModel() {
             FilterTypes.ByPeriod -> {
                 if (byDescending) {
                     val sortedHabits =
-                        currentHabitsLiveData.value?.sortedByDescending { it.frequency }
+                        currentHabitsLiveData.value?.sortedByDescending { it.period }
                     currentHabitsLiveData.value = sortedHabits?.toMutableList()
                 } else {
                     val sortedHabits =
-                        currentHabitsLiveData.value?.sortedBy { it.frequency }
+                        currentHabitsLiveData.value?.sortedBy { it.period }
                     currentHabitsLiveData.value = sortedHabits?.toMutableList()
                 }
             }

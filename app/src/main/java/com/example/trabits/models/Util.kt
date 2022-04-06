@@ -1,12 +1,10 @@
 package com.example.trabits.models
 
-
 import android.graphics.Color
+import com.example.trabits.R
 
 class Util {
-
     companion object {
-
         val intColors = mutableMapOf(
             0 to parse("#FFCBBB"),
             1 to parse("#FFE8BB"),
@@ -33,7 +31,6 @@ class Util {
             intColors.keys.forEach {
                 if (intColors[it] == color) return it
             }
-
             return 16
         }
     }
