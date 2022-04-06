@@ -1,7 +1,6 @@
 package com.example.trabits.models
 
 import android.graphics.Color
-import com.example.trabits.R
 
 class Util {
     companion object {
