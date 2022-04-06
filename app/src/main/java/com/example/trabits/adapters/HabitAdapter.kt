@@ -1,15 +1,17 @@
-package com.example.trabits
+package com.example.trabits.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.trabits.R
 import com.example.trabits.fragments.HabitListFragmentDirections
+import com.example.trabits.models.Habit
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.recycler_item.view.*
-
 
 class HabitAdapter(
     private var habits: MutableList<Habit>,
@@ -26,15 +28,16 @@ class HabitAdapter(
 
     override fun getItemCount(): Int = habits.size
 
+    fun setData(newHabits: MutableList<Habit>) {
+        val diffUtil = DiffUtilHabitsRecycler(habits, newHabits)
+        val diffResults = DiffUtil.calculateDiff(diffUtil)
+        habits = newHabits
+        diffResults.dispatchUpdatesTo(this)
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(habits[position])
     }
-
-    fun addListOfHabits(newHabits: MutableList<Habit>) {
-        habits = newHabits
-        notifyDataSetChanged()
-    }
-
 
     inner class ViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -56,7 +59,7 @@ class HabitAdapter(
                 habit_recycler_name.text = habit.title
 
                 habit_recycler_description.text = habit.description
-
+//TODO(вынести логику в утилс и внедрить строки с параметрами)
                 habit_recycler_priority.text = when (habit.priority) {
                     1 -> "${priorities[1]} ${this.resources.getString(R.string.priority)}"
                     2 -> "${priorities[2]} ${this.resources.getString(R.string.priority)}"

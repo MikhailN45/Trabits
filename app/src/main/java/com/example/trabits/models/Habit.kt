@@ -1,4 +1,4 @@
-package com.example.trabits
+package com.example.trabits.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -11,5 +11,7 @@ data class Habit(
     var type: Int,
     var count: Int,
     var frequency: Int,
-    var color: Int
+    var color: Int,
+    var date: Long,
+    var doneDates: MutableList<Long>
 ) : Parcelable

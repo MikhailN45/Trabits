@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HabitListFragment">
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_fragment_constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HabitListActivity">
+        android:orientation="horizontal"
+        tools:context=".MainActivity">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/habit_list_tablayout"
@@ -17,6 +19,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@android:color/darker_gray"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -25,25 +28,23 @@
             android:layout_height="@dimen/dimen_0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/habit_list_tablayout" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/to_edit_habit_button"
-            style="Widget.Design.FloatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_16"
-            android:contentDescription="@string/add_new_habit"
-            android:src="@drawable/ic_baseline_add_32"
-            app:backgroundTint="@color/colorPrimary"
-            app:elevation="@dimen/dimen_8"
-            app:fabSize="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.95"
-            app:tint="@android:color/white" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+
+    <include layout="@layout/bottom_sheet_main_fragment" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/to_edit_habit_button"
+        style="Widget.Design.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16"
+        android:contentDescription="@string/add_new_habit"
+        android:src="@drawable/ic_baseline_add_32"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="@dimen/dimen_8"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/bottom_sheet_habit_list_fragment"
+        app:layout_anchorGravity="top|end"
+        app:tint="@android:color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

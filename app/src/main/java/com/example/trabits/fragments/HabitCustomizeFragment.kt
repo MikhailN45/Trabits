@@ -8,16 +8,22 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.trabits.*
+import com.example.trabits.databinding.HabitCustomizeFragmentBinding
+import com.example.trabits.models.Habit
+import com.example.trabits.models.Util
+import com.example.trabits.viewmodels.HabitCustomizeViewModel
+import com.example.trabits.viewmodels.HabitListViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.habit_customize_fragment.*
-
+import java.util.*
 
 class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
-
-    private var chosenColor: Int = Util.intColors[16]!!
+    private var _binding: HabitCustomizeFragmentBinding? = null
+    private val binding get() = _binding!!
+    private var chosenColor: Int = Util.intColors.getValue(16)
     private var chosenColorNumber = ColorPickerDialogFragment.DEFAULT_COLOR
 
     private val priorities: Array<String> by lazy {
@@ -36,11 +42,16 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
         Navigation.findNavController(requireView())
     }
 
+    private val habitsListViewModel: HabitListViewModel by activityViewModels()
+
+    private val habitsCustomizeViewModel: HabitCustomizeViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = HabitCustomizeFragmentBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -50,17 +61,34 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
                 .setPositiveButton(R.string.yes) { _, _ ->
                     navController.popBackStack()
                 }
-                .setNegativeButton(R.string.no) { _, _ -> }
+                .setNegativeButton(R.string.no, null)
                 .setCancelable(true)
                 .show()
         }
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         init()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        val adapterPriority = ArrayAdapter(requireContext(), R.layout.spinner_list_item, priorities)
+        (binding.habitPriorityLayout.editText as? AutoCompleteTextView)?.setAdapter(adapterPriority)
+        binding.habitPriorityEdit.keyListener = null
+
+        val adapterPeriod = ArrayAdapter(requireContext(), R.layout.spinner_list_item, periods)
+        (binding.habitPeriodicityLayout.editText as? AutoCompleteTextView)?.setAdapter(adapterPeriod)
+        binding.habitPeriodicityEdit.keyListener = null
+
+        super.onResume()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -76,156 +104,128 @@ class HabitCustomizeFragment : Fragment(R.layout.habit_customize_fragment) {
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        outState.putInt(COLOR_CONFIG_CHANGE_CODE, chosenColor)
-        outState.putInt(COLOR_NUM_CONFIG_CHANGE_CODE, chosenColorNumber)
-
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-
-        savedInstanceState?.let { it ->
-            chosenColor = it.getInt(COLOR_CONFIG_CHANGE_CODE)
-            chosenColorNumber =
-                it.getInt(COLOR_NUM_CONFIG_CHANGE_CODE)
-            current_color_image_view.setColorFilter(chosenColor)
-        }
-
-        super.onViewStateRestored(savedInstanceState)
-    }
-
+    //TODO(вынести логику, разбить длинный метод)
     private fun saveHabit() {
         if (validateInput()) {
+            val newPriority = if (binding.habitPriorityEdit.text.toString().isNotEmpty())
+                priorities.indexOf(binding.habitPriorityEdit.text.toString())
+             else 0
 
-            val newPriority = if (habit_priority_edit.text.toString().isNotEmpty()) {
-                priorities.indexOf(habit_priority_edit.text.toString())
-            } else 0
-
-            val newCount = if (habit_counter_edit.text.toString() == "")
+            val newCount = if (binding.habitCounterEdit.text.toString() == "")
                 0
             else
-                habit_counter_edit.text.toString().toInt()
+                binding.habitCounterEdit.text.toString().toInt()
 
-            val newFrequency = if (habit_periodicity_edit.text.toString().isNotEmpty()) {
-                periods.indexOf(habit_periodicity_edit.text.toString())
-            } else 0
+            val newFrequency = if (binding.habitPeriodicityEdit.text.toString().isNotEmpty())
+                periods.indexOf(binding.habitPeriodicityEdit.text.toString())
+             else
+                 0
+
+            val newDate = if (habitToCustomize != null)
+                habitToCustomize!!.date
+             else
+                Calendar.getInstance().time.time
 
             val newHabit = Habit(
-                title = habit_name_edit.text.toString(),
-                description = habit_description_edit.text.toString(),
+                title = binding.habitNameEdit.text.toString(),
+                description = binding.habitDescriptionEdit.text.toString(),
                 priority = newPriority,
-                type = radio_good.isChecked.toInt(),
+                type = binding.radioGood.isChecked.toInt(),
                 count = newCount,
                 frequency = newFrequency,
-                color = chosenColor
+                color = chosenColor,
+                date = newDate,
+                doneDates = mutableListOf()
             )
 
             if (habitToCustomize != null) {
-                FakeDatabase.replaceHabit(habitToCustomize!!, newHabit)
+                habitsListViewModel.replaceHabit(habitToCustomize!!, newHabit)
             } else {
-                FakeDatabase.addHabit(newHabit)
+                habitsListViewModel.addHabit(newHabit)
             }
             requireView().hideKeyboard()
+            habitsCustomizeViewModel.clear()
             navController.popBackStack()
-
         }
     }
 
     private fun validateInput(): Boolean {
         var correct = true
 
-        if (habit_name_edit.text?.isEmpty() == true) {
-            habit_name_layout.error = resources.getString(R.string.field_must_not_be_empty)
+        if (binding.habitNameEdit.text?.isEmpty() == true) {
+            binding.habitNameLayout.error = resources.getString(R.string.field_must_not_be_empty)
             correct = false
         } else
-            habit_name_layout.error = ""
+            binding.habitNameLayout.error = ""
 
-        if (habit_description_edit.text?.isEmpty() == true) {
-            habit_description_layout.error =
+        if (binding.habitDescriptionEdit.text?.isEmpty() == true) {
+            binding.habitDescriptionLayout.error =
                 resources.getString(R.string.field_must_not_be_empty)
             correct = false
         } else
-            habit_description_layout.error = ""
+            binding.habitDescriptionLayout.error = ""
 
-        if (habit_periodicity_edit.text?.isEmpty() == true) {
-            habit_periodicity_layout.error =
+        if (binding.habitPeriodicityEdit.text?.isEmpty() == true) {
+            binding.habitPeriodicityLayout.error =
                 resources.getString(R.string.field_must_not_be_empty)
             correct = false
         } else
-            habit_periodicity_layout.error = ""
+            binding.habitPeriodicityLayout.error = ""
 
         return correct
     }
 
-
     private fun init() {
+        habitsCustomizeViewModel.colorPair.observe(viewLifecycleOwner, { colorPair ->
+            colorPair?.let {
+                chosenColor = it.first
+                chosenColorNumber = it.second
+                binding.currentColorImageView.setColorFilter(it.first)
+            }
+        })
 
         habitToCustomize?.let {
-            habit_name_edit.setText(it.title)
-            habit_description_edit.setText((it.description))
+            binding.habitNameEdit.setText(it.title)
+            binding.habitDescriptionEdit.setText((it.description))
 
             if (it.type.toBoolean()) {
-                radio_good.isChecked = true
+                binding.radioGood.isChecked = true
             } else {
-                radio_bad.isChecked = true
+                binding.radioBad.isChecked = true
             }
 
-            habit_counter_edit.setText(it.count.toString())
-
-            habit_priority_edit.setText(priorities[it.priority])
-            habit_periodicity_edit.setText(periods[it.frequency])
+            binding.habitCounterEdit.setText(it.count.toString())
+            binding.habitPriorityEdit.setText(priorities[it.priority])
+            binding.habitPeriodicityEdit.setText(periods[it.frequency])
 
             chosenColor = it.color
-
-            current_color_image_view.setColorFilter(it.color)
+            chosenColorNumber = Util.getColorNumberByColor(it.color)
         }
 
-        val adapterPriority = ArrayAdapter(requireContext(), R.layout.spinner_list_item, priorities)
-        (habit_priority_layout.editText as? AutoCompleteTextView)?.setAdapter(adapterPriority)
-        habit_priority_edit.keyListener = null
-
-        val adapterPeriod = ArrayAdapter(requireContext(), R.layout.spinner_list_item, periods)
-        (habit_periodicity_layout.editText as? AutoCompleteTextView)?.setAdapter(adapterPeriod)
-        habit_periodicity_edit.keyListener = null
-
-        habit_editor_color_picker_button.setOnClickListener {
+        binding.habitEditorColorPickerButton.setOnClickListener {
             colorPickersOnClick()
         }
 
-        current_color_image_view.setOnClickListener {
+        binding.currentColorImageView.setOnClickListener {
             colorPickersOnClick()
         }
 
-        current_color_image_view.setColorFilter(chosenColor)
+        binding.currentColorImageView.setColorFilter(chosenColor)
     }
-
 
     private fun colorPickersOnClick() {
 
-        ColorPickerDialogFragment.newInstance(Util.getColorNumberByColor(chosenColor)) { newColor, newColorNumber ->
-
-            chosenColor = newColor
-            chosenColorNumber = newColorNumber
-            current_color_image_view.setColorFilter(newColor)
-        }
+        ColorPickerDialogFragment.newInstance()
             .show(parentFragmentManager, ColorPickerDialogFragment.TAG)
-
+        habitsCustomizeViewModel.setColorPair(chosenColor, chosenColorNumber)
     }
 
     private fun Boolean.toInt() = if (this) 1 else 0
 
     private fun Int.toBoolean(): Boolean = this == 1
 
-
     private fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
-    }
-
-    companion object {
-        const val COLOR_CONFIG_CHANGE_CODE = "current color"
-        const val COLOR_NUM_CONFIG_CHANGE_CODE = "current color number"
     }
 }

@@ -3,12 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/about_fragment.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/habit_customize_fragment.xml" value="0.15462962962962962" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/drawable/ic_baseline_arrow_downward_24.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/drawable/ic_baseline_arrow_downward_24_activated.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/drawable/ic_baseline_arrow_upward_24_activated.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/about_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/bad_habits_fragment.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/bottom_sheet_main_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/color_picker_fragment.xml" value="0.17222222222222222" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/habit_customize_fragment.xml" value="0.2" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/habit_list_activity.xml" value="0.2" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/habit_list_fragment.xml" value="0.176" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/header_layout.xml" value="0.15462962962962962" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/recycler_item.xml" value="0.15462962962962962" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/layout/spinner_list_item.xml" value="0.1814814814814815" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/menu/main_fragment_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Trabits/app/src/main/res/menu/nav_drawer_menu.xml" value="0.25416666666666665" />
       </map>
     </option>

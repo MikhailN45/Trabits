@@ -8,22 +8,28 @@
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="com.example.trabits.fragments.HabitListFragment"
-        android:label="Habits List"
+        android:label="@string/habits_list"
         tools:layout="@layout/habit_list_fragment">
 
         <action
             android:id="@+id/action_habitListFragment_to_habitCustomizeFragment"
-            app:destination="@id/habit_customize_fragment" />
+            app:destination="@id/habit_customize_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
         <argument
             android:name="CustomizeHabit"
             android:defaultValue="@null"
-            app:argType="com.example.trabits.Habit"
+            app:argType="com.example.trabits.models.Habit"
             app:nullable="true" />
 
         <action
             android:id="@+id/action_habitListFragment_to_aboutFragment"
-            app:destination="@id/credits_drawer_fragment" />
+            app:destination="@id/credits_drawer_fragment"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -35,17 +41,12 @@
         <argument
             android:name="habitToEdit"
             android:defaultValue="@null"
-            app:argType="com.example.trabits.Habit"
+            app:argType="com.example.trabits.models.Habit"
             app:nullable="true" />
 
         <argument
             android:name="dynamicTitle"
             app:argType="string" />
-
-
-        <action
-            android:id="@+id/action_habitCustomizeFragment_to_habitListFragment"
-            app:destination="@id/nav_host_fragment" />
     </fragment>
 
     <fragment

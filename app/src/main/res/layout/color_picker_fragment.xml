@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/chosenColorCard"
+        android:id="@+id/chosen_color_card"
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
@@ -14,11 +14,11 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/app_name_credits"
         app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+        android:id="@+id/horizontal_colors_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chosenColorCard"
+        app:layout_constraintTop_toBottomOf="@+id/chosen_color_card"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck">
 
@@ -442,7 +442,7 @@
     </HorizontalScrollView>
 
     <TextView
-        android:id="@+id/rgbColorTextView"
+        android:id="@+id/rgb_color_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -453,25 +453,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_colors_scroll_view"
         app:layout_constraintVertical_bias="0.0"
         tools:text="R 13 G 37 B 228" />
 
     <TextView
-        android:id="@+id/hsvColorTextView"
+        android:id="@+id/hsv_color_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rgbColorTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/rgb_color_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.01"
-        app:layout_constraintStart_toEndOf="@+id/rgbColorTextView"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:layout_constraintStart_toEndOf="@+id/rgb_color_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_colors_scroll_view"
         app:layout_constraintVertical_bias="1.0"
         tools:text="(228.0, 0.13, 0.37)" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/defaultColorButton"
+        android:id="@+id/set_default_color_button"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -484,11 +484,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rgbColorTextView"
+        app:layout_constraintTop_toBottomOf="@+id/rgb_color_text_view"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/applyColorButton"
+        android:id="@+id/save_color_button"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -497,22 +497,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/defaultColorButton"
-        app:layout_constraintTop_toBottomOf="@+id/hsvColorTextView" />
+        app:layout_constraintStart_toEndOf="@+id/set_default_color_button"
+        app:layout_constraintTop_toBottomOf="@+id/hsv_color_text_view" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/app_name_credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/choose_habit_color"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/chosenColorCard"
+        app:layout_constraintBottom_toBottomOf="@+id/chosen_color_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/chosenColorCard"
+        app:layout_constraintTop_toTopOf="@+id/chosen_color_card"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

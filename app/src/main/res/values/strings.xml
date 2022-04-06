@@ -35,6 +35,9 @@
     <string name="about_fragment">About Fragment</string>
     <string name="https_github_com_mikhailn45">https://github.com/MikhailN45</string>
     <string name="developed_for_doubletapp">Developed for DoubleTapp</string>
+    <string name="search">Search</string>
+    <string name="filter_type">Filter Type</string>
+    <string name="find_and_sort">Find and sort</string>
     <string-array name="priorities">
         <item>No priority</item>
         <item>Low</item>
@@ -88,5 +91,12 @@
         <item>(255, 187, 230)</item>
         <item>(255, 187, 202)</item>
         <item>(159, 168, 218)</item>
+    </string-array>
+    <string-array name="filterTypes">
+        <item>By priority</item>
+        <item>By period</item>
+        <item>By quantity</item>
+        <item>By date</item>
+        <item>Without filter</item>
     </string-array>
 </resources>
