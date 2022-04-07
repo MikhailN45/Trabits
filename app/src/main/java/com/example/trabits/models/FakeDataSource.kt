@@ -1,6 +1,4 @@
-package com.example.trabits.data
-
-import com.example.trabits.models.Habit
+package com.example.trabits.models
 
 class FakeDataSource {
 
