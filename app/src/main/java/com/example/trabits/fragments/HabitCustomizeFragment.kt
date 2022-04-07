@@ -213,7 +213,6 @@ override fun onCreateView(
     }
 
     private fun colorPickersOnClick() {
-
         ColorPickerDialogFragment.newInstance()
             .show(parentFragmentManager, ColorPickerDialogFragment.TAG)
         habitsCustomizeViewModel.setColorPair(chosenColor, chosenColorNumber)

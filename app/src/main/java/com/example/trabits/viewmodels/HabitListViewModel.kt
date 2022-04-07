@@ -28,7 +28,6 @@ class HabitListViewModel : ViewModel() {
     fun sortHabits(filterType: FilterTypes, byDescending: Boolean) {
 
         when (filterType) {
-
             FilterTypes.ByPriority -> {
                 if (byDescending) {
                     val sortedHabits =
@@ -82,7 +81,7 @@ class HabitListViewModel : ViewModel() {
         }
     }
 
-    fun sortHabits(text: String) { //Поиск по привычкам
+    fun sortHabits(text: String) {
         if (text.isNotEmpty()) {
             val sortedHabits = FakeDataSource.habitsList.filter {
                 it.title.contains(text, ignoreCase = true)
